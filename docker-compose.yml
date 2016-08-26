@@ -21,9 +21,9 @@ services:
       - "9390/tcp"
       - "9391/tcp"
     depends_on:
-      - redis
+      - openvas-redis
     links:
-      - "redis:redis"
+      - "openvas-redis:redis"
     environment:
       - "HTTP_ONLY=true"
   openvas-redis:
