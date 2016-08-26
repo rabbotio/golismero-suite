@@ -27,9 +27,9 @@ ENV SPIDERFOOT_VERSION 2.7.0
 
 # Download the specified release.
 WORKDIR /home
-RUN curl -sSL https://github.com/smicallef/spiderfoot/archive/v$SPIDERFOOT_VERSION-final.tar.gz \
+RUN curl -sSL http://sourceforge.net/projects/spiderfoot/files/spiderfoot-$SPIDERFOOT_VERSION-src.tar.gz/download \
   | tar -v -C /home -xz \
-  && mv /home/spiderfoot-$SPIDERFOOT_VERSION-final /home/spiderfoot \
+  && mv /home/spiderfoot-$SPIDERFOOT_VERSION /home/spiderfoot \
   && chown -R spiderfoot:spiderfoot /home/spiderfoot
 
 USER spiderfoot
