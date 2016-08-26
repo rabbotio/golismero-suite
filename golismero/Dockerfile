@@ -1,0 +1,26 @@
+FROM debian:jessie
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && \
+    apt-get -y install \
+        git \
+	    perl \
+	    python \
+        python-pip \
+	    nmap \
+	    sslscan \
+	    apache2
+RUN useradd -m golismero
+
+RUN git clone https://github.com/golismero/golismero /opt/golismero
+RUN chown -R golismero /opt/golismero
+RUN ln -s /opt/golismero/golismero.py /usr/bin/golismero
+USER golismero
+WORKDIR /opt/golismero
+RUN pip install --user -r requirements.txt
+RUN pip install --user -r requirements_unix.txt
+RUN mkdir /home/golismero/.golismero/
+ADD golismero.conf /home/golismero/.golismero/user.conf
+
+ENTRYPOINT ["golismero"]

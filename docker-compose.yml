@@ -1,0 +1,42 @@
+version: '2'
+services:
+  golismero:
+    container_name: 'golismero'
+    restart: always
+    tty: true
+    build: ./golismero
+    depends_on:
+      - openvas
+      - spiderfoot
+    links:
+      - "openvas:openvas"
+      - "spiderfoot:spiderfoot"
+    entrypoint: "bash"
+  openvas:
+    container_name: 'openvas'
+    restart: always
+    build: ./openvas
+    expose:
+      - "80/tcp"
+      - "9390/tcp"
+      - "9391/tcp"
+    depends_on:
+      - redis
+    links:
+      - "redis:redis"
+    environment:
+      - "HTTP_ONLY=true"
+  openvas-redis:
+    container_name: 'openvas_redis'
+    image: redis
+    ports:
+        - "6379"
+  spiderfoot:
+    container_name: 'spiderfoot'
+    restart: always
+    build: ./spiderfoot
+    expose:
+      - "8080/tcp"
+    environment:
+      - "HTTP_ONLY=true"
+
