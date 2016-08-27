@@ -14,13 +14,17 @@ RUN apt-get update && \
 RUN useradd -m golismero
 
 RUN git clone https://github.com/golismero/golismero /opt/golismero
-RUN chown -R golismero /opt/golismero
 RUN ln -s /opt/golismero/golismero.py /usr/bin/golismero
+ADD run.sh /usr/bin/run.sh
+RUN chmod +x /usr/bin/run.sh
+RUN mkdir -p /home/golismero/.golismero/
+ADD golismero.conf /home/golismero/.golismero/user.conf
+RUN chown -R golismero /opt/golismero
+RUN chown -R golismero /home/golismero/
+
 USER golismero
 WORKDIR /opt/golismero
 RUN pip install --user -r requirements.txt
 RUN pip install --user -r requirements_unix.txt
-RUN mkdir /home/golismero/.golismero/
-ADD golismero.conf /home/golismero/.golismero/user.conf
 
-ENTRYPOINT ["golismero"]
+ENTRYPOINT ["run.sh"]

@@ -11,7 +11,8 @@ services:
     links:
       - "openvas:openvas"
       - "spiderfoot:spiderfoot"
-    entrypoint: "bash"
+    entrypoint: "run.sh scan $TARGET"
+    env_file: .env
   openvas:
     container_name: 'openvas'
     restart: always
@@ -39,4 +40,3 @@ services:
       - "8080/tcp"
     environment:
       - "HTTP_ONLY=true"
-
