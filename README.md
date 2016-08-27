@@ -5,7 +5,7 @@
 ## About ##
 
 This repo aims to simplify the setup and usage of the
-(Golismero)[http://www.golismero.com/] pentesting suite and the various
+[Golismero](http://www.golismero.com/) pentesting suite and the various
 dependencies services it requires with automation use cases in mind.
 
 ## Requirements ##
