@@ -5,5 +5,5 @@ if [ ! -z "$SHODAN_KEY" ]; then
 		>> "$HOME/.golismero/user.conf"
 fi
 
-sleep 5000
+sleep 300 # Allow all plugins to come up
 [ ! -z "$TARGET" ] && golismero "$@"
