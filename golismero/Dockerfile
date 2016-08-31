@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
     apt-get -y install \
+        wget \
         git \
 	    perl \
 	    python \
@@ -13,7 +14,16 @@ RUN apt-get update && \
 	    apache2
 RUN useradd -m golismero
 
-RUN git clone https://github.com/golismero/golismero /opt/golismero
+RUN git clone https://github.com/lrvick/golismero /opt/golismero
+
+# Generate OpenVAS Plugin Database
+RUN cd /opt/golismero/plugins/testing/scan/openvas_plugin && \
+    mkdir -p nvt_feed && \
+    wget http://www.openvas.org/openvas-nvt-feed-current.tar.bz2 && \
+    tar -vjxf openvas-nvt-feed-current.tar.bz2 -C nvt_feed && \
+    python setup.py -p nvt_feed -v && \
+    rm openvas-nvt-feed-current.tar.bz2
+    
 RUN ln -s /opt/golismero/golismero.py /usr/bin/golismero
 ADD run.sh /usr/bin/run.sh
 RUN chmod +x /usr/bin/run.sh

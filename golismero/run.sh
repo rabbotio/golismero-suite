@@ -5,4 +5,5 @@ if [ ! -z "$SHODAN_KEY" ]; then
 		>> "$HOME/.golismero/user.conf"
 fi
 
-golismero "$@"
+sleep 5000
+[ ! -z "$TARGET" ] && golismero "$@"

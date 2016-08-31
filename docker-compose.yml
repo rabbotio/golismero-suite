@@ -21,6 +21,10 @@ services:
       - "80/tcp"
       - "9390/tcp"
       - "9391/tcp"
+    #ports:
+    #  - "8081:80"
+    #  - "9390:9390"
+    #  - "9391:9391"
     depends_on:
       - openvas-redis
     links:
@@ -38,5 +42,7 @@ services:
     build: ./spiderfoot
     expose:
       - "8080/tcp"
+    ports:
+      - "8080:8080"
     environment:
       - "HTTP_ONLY=true"
