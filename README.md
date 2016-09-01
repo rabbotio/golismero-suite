@@ -18,7 +18,7 @@ dependencies services it requires with automation use cases in mind.
 1. Clone
 
     ```bash
-    git clone git@github.com:pebble/golismero-suite.git
+    git clone git@github.com:pebble/golismero-suite.git golismero
     cd golismero
     ```
 
