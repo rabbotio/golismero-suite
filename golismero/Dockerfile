@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get -y install \
         wget \
+        netcat \
         git \
 	    perl \
 	    python \
@@ -14,7 +15,9 @@ RUN apt-get update && \
 	    apache2
 RUN useradd -m golismero
 
-RUN git clone https://github.com/lrvick/golismero /opt/golismero
+RUN git clone https://github.com/lrvick/golismero /opt/golismero && \
+    cd /opt/golismero && \
+    git checkout develop
 
 # Generate OpenVAS Plugin Database
 RUN cd /opt/golismero/plugins/testing/scan/openvas_plugin && \

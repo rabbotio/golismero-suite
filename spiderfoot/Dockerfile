@@ -23,14 +23,15 @@ RUN rm -rf /var/lib/apt/lists/* \
 RUN addgroup spiderfoot && \
     useradd -r -g spiderfoot -d /home/spiderfoot -s /sbin/nologin -c "SpiderFoot User" spiderfoot
 
-ENV SPIDERFOOT_VERSION 2.7.0
+ENV SPIDERFOOT_VERSION 2.6.1
 
 # Download the specified release.
-WORKDIR /home
-RUN curl -sSL http://sourceforge.net/projects/spiderfoot/files/spiderfoot-$SPIDERFOOT_VERSION-src.tar.gz/download \
-  | tar -v -C /home -xz \
-  && mv /home/spiderfoot-$SPIDERFOOT_VERSION /home/spiderfoot \
-  && chown -R spiderfoot:spiderfoot /home/spiderfoot
+RUN git clone https://github.com/smicallef/spiderfoot.git /home/spiderfoot && \
+    chown -R spiderfoot:spiderfoot /home/spiderfoot && \
+    cd /home/spiderfoot && \
+    git checkout v${SPIDERFOOT_VERSION}-final
+WORKDIR /home/spiderfoot
+
 
 USER spiderfoot
 WORKDIR /home/spiderfoot
