@@ -1,4 +1,4 @@
-# Golsimero Suite #
+# Golismero Suite #
 
 <http://github.com/pebble/golismero-suite>
 
