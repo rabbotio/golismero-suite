@@ -2,7 +2,7 @@ version: '2'
 services:
   golismero:
     container_name: 'golismero'
-    restart: always
+    restart: never
     tty: true
     build: ./golismero
     depends_on:
