@@ -17,7 +17,8 @@ RUN useradd -m golismero
 
 RUN git clone https://github.com/lrvick/golismero /opt/golismero && \
     cd /opt/golismero && \
-    git checkout develop
+    git checkout develop && \
+    git reset --hard 021c5dc4e17505d0ec4141d06470a82c8ca63be0
 
 # Generate OpenVAS Plugin Database
 RUN cd /opt/golismero/plugins/testing/scan/openvas_plugin && \
