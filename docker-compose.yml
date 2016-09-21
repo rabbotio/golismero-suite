@@ -11,7 +11,13 @@ services:
     links:
       - "openvas:openvas"
       - "spiderfoot:spiderfoot"
-    entrypoint: "run.sh scan $TARGET"
+    volumes:
+      - $GOLISMERO_RESULTS_DIR:/home/golismero/results
+    entrypoint: "run.sh scan $TARGET \
+                   -db ~/results/database.db \
+                   -o ~/results/results.csv \
+                   -o ~/results/index.html \
+                   $GOLISMERO_ARGS"
     env_file: .env
   openvas:
     container_name: 'openvas'
@@ -21,10 +27,6 @@ services:
       - "80/tcp"
       - "9390/tcp"
       - "9391/tcp"
-    #ports:
-    #  - "8081:80"
-    #  - "9390:9390"
-    #  - "9391:9391"
     depends_on:
       - openvas-redis
     links:
@@ -35,7 +37,7 @@ services:
     container_name: 'openvas_redis'
     image: redis
     ports:
-        - "6379"
+      - "6379"
   spiderfoot:
     container_name: 'spiderfoot'
     restart: always
@@ -46,3 +48,29 @@ services:
       - "8080:8080"
     environment:
       - "HTTP_ONLY=true"
+  nginx:
+    container_name: 'nginx'
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    expose:
+      - "8080/tcp"
+    volumes:
+      - $GOLISMERO_RESULTS_DIR:/usr/share/nginx/html
+  oauth2_proxy:
+    container_name: 'oauth2_proxy'
+    image: a5huynh/oauth2_proxy
+    command: "--cookie-secure=false \
+              --upstream='http://nginx:8081' \
+              --http-address='0.0.0.0:80' \
+              --redirect-url=\"https://$VIRTUAL_HOST/oauth2/callback\" \
+              --email-domain=\"$OAUTH2_PROXY_EMAIL_DOMAIN\""
+    links:
+      - "nginx:nginx"
+    env_file: .env
+    ports:
+      - "80:80"
+    expose:
+      - "80/tcp"
+    depends_on:
+      - nginx
