@@ -48,3 +48,35 @@ dependencies services it requires with automation use cases in mind.
     ```bash
     make run
     ```
+
+## Deployment ##
+
+The easiest way to deploy this at the moment is via Docker Machine to a 
+pentesting-friendly VPS service such as DigitalOcean.
+
+1. Obtain DigitalOcean Access Token.
+
+    Visit: https://cloud.digitalocean.com/settings/api/tokens
+
+2. Provision server
+
+    ```bash
+    docker-machine create \
+      --driver digitalocean
+      --digitalocean-access-token=YOUR_ACCESS_TOKEN
+      --digitalocean-image=ubuntu-16-04-x64
+      golismero
+    ```
+
+3. File a ticket with support
+
+  Golismero is very noisy and freaks out VPS support teams. Get a note placed
+  on your account that lots of strange pentesting activity is expected to avoid
+  problems.
+
+4. Run Golismero
+
+    ```bash
+    eval $(docker-machine env golismero)
+    make run
+    ```

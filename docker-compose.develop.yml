@@ -1,0 +1,8 @@
+version: '2'
+services:
+  golismero:
+    build: ./golismero
+  openvas:
+    build: ./openvas
+  spiderfoot:
+    build: ./spiderfoot

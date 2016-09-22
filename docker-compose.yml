@@ -4,7 +4,7 @@ services:
     container_name: 'golismero'
     restart: never
     tty: true
-    build: ./golismero
+    image: pebbletech/golismero
     depends_on:
       - openvas
       - spiderfoot
@@ -22,7 +22,7 @@ services:
   openvas:
     container_name: 'openvas'
     restart: always
-    build: ./openvas
+    image: pebbletech/openvas
     expose:
       - "80/tcp"
       - "9390/tcp"
@@ -41,7 +41,7 @@ services:
   spiderfoot:
     container_name: 'spiderfoot'
     restart: always
-    build: ./spiderfoot
+    image: pebbletech/spiderfoot
     expose:
       - "8080/tcp"
     ports:
