@@ -10,6 +10,7 @@ RUN apt-get update && \
 	    perl \
 	    python \
         python-pip \
+        sudo \
 	    nmap \
 	    sslscan \
 	    apache2
@@ -32,14 +33,13 @@ RUN ln -s /opt/golismero/golismero.py /usr/bin/golismero
 ADD run.sh /usr/bin/run.sh
 RUN chmod +x /usr/bin/run.sh
 RUN mkdir -p /home/golismero/.golismero/
-RUN mkdir -p /home/golismero/results
 ADD golismero.conf /home/golismero/.golismero/user.conf
+RUN mkdir -p /opt/golismero/results
 RUN chown -R golismero /opt/golismero
-RUN chown -R golismero /home/golismero/
+RUN chown -R golismero /home/golismero
 
-USER golismero
 WORKDIR /opt/golismero
-RUN pip install --user -r requirements.txt
-RUN pip install --user -r requirements_unix.txt
+RUN pip install -r requirements.txt
+RUN pip install -r requirements_unix.txt
 
 ENTRYPOINT ["run.sh"]
