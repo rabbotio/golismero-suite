@@ -23,41 +23,30 @@ services:
     container_name: 'openvas'
     restart: always
     image: pebbletech/openvas
-    expose:
-      - "9390/tcp"
-      - "9391/tcp"
     depends_on:
       - openvas-redis
     links:
       - "openvas-redis:redis"
     environment:
       - "HTTP_ONLY=true"
+    expose:
+      - "9390/tcp"
+      - "9391/tcp"
+      - "9392/tcp"
   openvas-redis:
     container_name: 'openvas_redis'
     image: redis
-    ports:
-      - "6379"
   spiderfoot:
     container_name: 'spiderfoot'
     restart: always
     image: pebbletech/spiderfoot
-    expose:
-      - "8080/tcp"
-    ports:
-      - "8080"
     environment:
       - "HTTP_ONLY=true"
   nginx:
     container_name: 'nginx'
     image: nginx:latest
-    ports:
-      - "80"
-    expose:
-      - "8081/tcp"
     volumes:
       - $GOLISMERO_RESULTS_DIR:/usr/share/nginx/html
-    environment:
-      - NGINX_PORT=80
   oauth2_proxy:
     container_name: 'oauth2_proxy'
     image: a5huynh/oauth2_proxy
@@ -73,7 +62,5 @@ services:
     env_file: .env
     ports:
       - "80:80"
-    expose:
-      - "80/tcp"
     depends_on:
       - nginx

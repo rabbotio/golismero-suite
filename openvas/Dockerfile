@@ -89,6 +89,3 @@ RUN apt-get update && \
     /openvas/setup.sh
 
 CMD /openvas/start.sh
-
-# Expose UI
-EXPOSE 80 443 9390 9391 9392
