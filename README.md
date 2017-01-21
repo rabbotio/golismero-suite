@@ -48,10 +48,13 @@ pentesting-friendly VPS service such as DigitalOcean.
 
     ```bash
     docker-machine create \
-      --driver digitalocean
-      --digitalocean-access-token=YOUR_ACCESS_TOKEN
-      --digitalocean-image=ubuntu-16-04-x64
-      golismero
+     --driver digitalocean \
+     --digitalocean-access-token=$DO_ACCESS_TOKEN
+     --digitalocean-image ubuntu-16-04-x64 \
+     --digitalocean-size 512mb \
+     --digitalocean-ipv6 \
+     --digitalocean-private-networking \
+     golismero
     ```
 
 3. File a ticket with support
