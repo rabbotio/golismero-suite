@@ -13,11 +13,7 @@ services:
       - "spiderfoot:spiderfoot"
     volumes:
       - $GOLISMERO_RESULTS_DIR:/opt/golismero/results
-    entrypoint: "run.sh scan $TARGET \
-                   -db /opt/golismero/results/database.db \
-                   -o /opt/golismero/results/results.csv \
-                   -o /opt/golismero/results/index.html \
-                   $GOLISMERO_ARGS"
+    entrypoint: "run.sh"
     env_file: .env
   openvas:
     container_name: 'openvas'
